@@ -22,7 +22,8 @@ myKeys = defineKeys [ ("M-p",        spawn dmenuRun)
                     ]
   where defineKeys = keys . additionalKeysP theConfig
 
-main = xmonad $ ewmh theConfig { modMask    = mod4Mask
+main =
+  xmonad $ ewmh theConfig { modMask    = mod4Mask
                           , terminal   = myTerminal
                           , manageHook = myManageHook
                           , keys       = myKeys
