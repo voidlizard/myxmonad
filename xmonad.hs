@@ -12,8 +12,8 @@ theConfig = desktopConfig
 myTerminal = "lxterminal"
 
 dmenuRun = unwords [ "dmenu_run "
-                   , "-nb", "'#e0e0e0'" 
-                   , "-nf", "'#3b495e'" 
+                   , "-nb", "'#e0e0e0'"
+                   , "-nf", "'#3b495e'"
                    , "-fn", "'DejaVu Sans Mono-10:style=bold'"
                    ]
 
@@ -25,7 +25,7 @@ sshot = unwords [ "mkdir -p", myScreenShotDir, ";"
                 , "xdg-open $sfile"
                 ]
 
-myManageHook = manageDocks <+> manageHook theConfig 
+myManageHook = manageDocks <+> manageHook theConfig
 
 myKeys = keys $ additionalKeysP theConfig newKeys
   where newKeys = [ ("M-p",        spawn dmenuRun)
@@ -33,7 +33,7 @@ myKeys = keys $ additionalKeysP theConfig newKeys
                   ]
 
 main = xmonad $ theConfig { modMask    = mod4Mask
-                          , terminal   = myTerminal 
+                          , terminal   = myTerminal
                           , manageHook = myManageHook
                           , keys       = myKeys
                           }
