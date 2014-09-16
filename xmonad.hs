@@ -3,6 +3,7 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 import XMonad.Util.SpawnOnce
+import XMonad.Hooks.EwmhDesktops
 
 import Data.List
 
@@ -21,11 +22,12 @@ myKeys = defineKeys [ ("M-p",        spawn dmenuRun)
                     ]
   where defineKeys = keys . additionalKeysP theConfig
 
-main = xmonad $ theConfig { modMask    = mod4Mask
+main = xmonad $ ewmh theConfig { modMask    = mod4Mask
                           , terminal   = myTerminal
                           , manageHook = myManageHook
                           , keys       = myKeys
                           , startupHook = startup
+                          , handleEventHook = handleEventHook theConfig <+> fullscreenEventHook
                           }
 
 startup :: X()
