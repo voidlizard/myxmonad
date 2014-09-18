@@ -19,6 +19,9 @@ myManageHook = manageDocks <+> manageHook theConfig
 
 myKeys = defineKeys [ ("M-p",        spawn dmenuRun)
                     , ("<Print>",    spawn sshot)
+                    , ("<XF86AudioLowerVolume>", spawn volumeLo)
+                    , ("<XF86AudioRaiseVolume>", spawn volumeHi)
+                    , ("<XF86AudioMute>",        spawn volumeToggle)
                     ]
   where defineKeys = keys . additionalKeysP theConfig
 
@@ -34,6 +37,12 @@ main =
 startup :: X()
 startup = do
   return ()
+
+volumeToggle  = "amixer -q sset Master toggle"
+
+volumeLo = "amixer -q sset Master 1%-"
+
+volumeHi = "amixer -q sset Master 1%+"
 
 dmenuRun = unwords [ "dmenu_run "
                    , "-nb", "'#e0e0e0'"
