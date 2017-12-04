@@ -4,6 +4,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.EZConfig
 import XMonad.Util.SpawnOnce
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName
 
 import Data.List
 
@@ -11,7 +12,7 @@ import Data.List
 
 theConfig = desktopConfig
 
-myTerminal = "lxterminal"
+myTerminal = "mate-terminal"
 
 myScreenShotDir = "$HOME/Pictures/Screenshots"
 
@@ -19,21 +20,25 @@ myManageHook = manageDocks <+> manageHook theConfig
 
 myKeys = defineKeys [ ("M-p",        spawn dmenuRun)
                     , ("<Print>",    spawn sshot)
+                    , ("S-<Print>",  spawn sshotClip)
+                    , ("M1-C-l",     spawn lock)
                     , ("<XF86AudioLowerVolume>", spawn volumeLo)
                     , ("<XF86AudioRaiseVolume>", spawn volumeHi)
                     , ("<XF86AudioMute>",        spawn volumeToggle)
                     ]
   where defineKeys = keys . additionalKeysP theConfig
 
-main =
-  xmonad $ ewmh theConfig { modMask    = mod4Mask
-                          , terminal   = myTerminal
-                          , manageHook = myManageHook
-                          , keys       = myKeys
-                          , startupHook = startup
-                          , handleEventHook = handleEventHook theConfig <+> fullscreenEventHook
-                          }
+conf = ewmh theConfig { modMask    = mod4Mask
+                      , terminal   = myTerminal
+                      , manageHook = myManageHook
+                      , keys       = myKeys
+                      , startupHook = startup
+                      , handleEventHook = handleEventHook theConfig <+> fullscreenEventHook
+                      }
 
+main = do
+  xmonad conf { startupHook = startupHook conf >> setWMName "LG3D"
+              }
 startup :: X()
 startup = do
   return ()
@@ -55,3 +60,8 @@ sshot = unwords [ "mkdir -p", myScreenShotDir, ";"
                 , "import -window root $sfile", ";"
                 , "xdg-open $sfile"
                 ]
+
+sshotClip = unwords [ "import 'png:-' | xclip -selection clipboard -target image/png -i"
+                    ]
+
+lock = "dm-tool lock"
