@@ -22,9 +22,9 @@ myKeys = defineKeys [ ("M-p",        spawn dmenuRun)
                     , ("<Print>",    spawn sshot)
                     , ("S-<Print>",  spawn sshotClip)
                     , ("M1-C-l",     spawn lock)
-                    , ("<XF86AudioLowerVolume>", spawn volumeLo)
-                    , ("<XF86AudioRaiseVolume>", spawn volumeHi)
-                    , ("<XF86AudioMute>",        spawn volumeToggle)
+--                     , ("<XF86AudioLowerVolume>", spawn volumeLo)
+--                     , ("<XF86AudioRaiseVolume>", spawn volumeHi)
+--                     , ("<XF86AudioMute>",        spawn volumeToggle)
                     ]
   where defineKeys = keys . additionalKeysP theConfig
 
